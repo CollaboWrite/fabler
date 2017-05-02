@@ -11,7 +11,7 @@ const language = Language({
 // const text = 'Hello, world!';
 
 // Instantiates a Document, representing the provided text
-const document = language.document({ content: 'The mice once called a meeting to decide on a plan to free themselves of their enemy, the cat.' });
+const document = language.document({ content: 'Sarah is feeling awesome today' });
 
 document.detectSentiment()
   .then((results) => {
