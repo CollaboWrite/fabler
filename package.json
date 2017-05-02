@@ -1,0 +1,23 @@
+{
+  "name": "fabler",
+  "version": "1.0.0",
+  "description": "Capstone project",
+  "main": "app.js",
+  "dependencies": {
+    "express": "^4.15.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fabler-GHA/fabler.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/fabler-GHA/fabler/issues"
+  },
+  "homepage": "https://github.com/fabler-GHA/fabler#readme"
+}
