@@ -11,4 +11,4 @@ app.use(require('volleyball'))
 
 app.use(express.static(resolve(__dirname, 'phrase-matcher')))
 
-app.listen(8080, console.log('Listening at port 8080'))
+app.listen(3000, console.log('Listening at port 3000'))

@@ -6,12 +6,16 @@ const language = Language({
   projectId: 'fabler-166415',
   keyFilename: '../Fabler-630ee723e518.json'
 });
+const EventEmitter = require('node-event-emitter');
 
-// The text to analyze, e.g. "Hello, world!"
-// const text = 'Hello, world!';
 
-// Instantiates a Document, representing the provided text
-const document = language.document({ content: 'Sarah is feeling awesome today' });
+import ee from './phrase-matcher/script.js'
+
+ee.on('speech', (speechResult) => console.log(speechResult))
+
+// ee.on('speech', function(speechResult) {
+// console.log('speechResult', speechResult)
+const document = language.document({ content: speechResult });
 
 document.detectSentiment()
   .then((results) => {
@@ -50,3 +54,5 @@ document.detectSyntax()
   .catch((err) => {
     console.error('ERROR:', err);
   });
+// })
+

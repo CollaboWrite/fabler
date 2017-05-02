@@ -1,3 +1,5 @@
+const EventEmitter = require('node-event-emitter');
+
 var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition;
 var SpeechGrammarList = SpeechGrammarList || webkitSpeechGrammarList;
 var SpeechRecognitionEvent = SpeechRecognitionEvent || webkitSpeechRecognitionEvent;
@@ -17,6 +19,7 @@ function nextPhrase() {
   counter++
   return counter
 }
+const ee = new EventEmitter()
 
 function testSpeech() {
   testBtn.disabled = true;
@@ -36,9 +39,9 @@ function testSpeech() {
 
   recognition.start();
 
-  const ee = new EventEmitter()
+  
   // const subj = new Rx.FuncSubject()  // Maybe that's what it's called
-
+  let speaking = ''
   recognition.onresult = function(event) {
     // The SpeechRecognitionEvent results property returns a SpeechRecognitionResultList object
     // The SpeechRecognitionResultList object contains SpeechRecognitionResult objects.
@@ -50,9 +53,9 @@ function testSpeech() {
     // We then return the transcript property of the SpeechRecognitionAlternative object 
     var speechResult = event.results[0][0].transcript;
     diagnosticPara.textContent = 'Speech received: ' + speechResult + '.';
-
+    speaking = speechResult
     // With eventemitters
-    ee.emit('speech', event)
+    // ee.emit('speech', event)
 
     // With Rx
     // subj(event)
@@ -62,14 +65,14 @@ function testSpeech() {
     console.log('Confidence: ' + event.results[0][0].confidence);
   }
 
-  return ee
-  return subj
+
+  // return subj
 
   recognition.onspeechend = function() {
     recognition.stop();
     testBtn.disabled = false;
     testBtn.textContent = 'Start new test';
-    ee.emit('speech', speechResult) 
+    ee.emit('speech', speaking) 
   }
 
   recognition.onerror = function(event) {
@@ -82,6 +85,8 @@ function testSpeech() {
 
 testBtn.addEventListener('click', testSpeech);
 
+export default ee
+  
 // const recognizer = Speech.recognize()
 //     , analyzer = Speech.analyze()
 
