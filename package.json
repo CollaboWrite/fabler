@@ -9,7 +9,7 @@
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
     "volleyball": "^1.4.1",
-    "webpack-livereload-plugin": "^0.11.0"
+    "webpack-livereload-plugin": "^0.11.0",
     "@google-cloud/language": "^0.10.3"
   },
   "devDependencies": {},
