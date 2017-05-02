@@ -4,6 +4,7 @@
   "description": "Capstone project",
   "main": "app.js",
   "dependencies": {
+    "@google-cloud/language": "^0.10.3",
     "express": "^4.15.2"
   },
   "devDependencies": {},
