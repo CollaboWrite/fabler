@@ -6,8 +6,8 @@ module.exports = router
 
 router.post('/', (req, res, next) => {
   let sentence = req.body;
-  analyzeSpeech(sentence);  
+  let sentenceAnalysis = analyzeSpeech(sentence);  
   
-  res.sendStatus(204)
+  res.status(204).send(sentenceAnalysis)
 })
 

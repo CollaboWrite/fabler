@@ -1,5 +1,6 @@
 // Imports the Google Cloud client library
 const Language = require('@google-cloud/language')
+const Promise = require('bluebird')
 
 // Instantiates a client
 const language = Language({
@@ -10,46 +11,39 @@ const language = Language({
 
 const analyzeSpeech = function (speechResult) {
   // console.log('speechResult', speechResult)
-  
   const document = language.document({ content: speechResult });
-
-  document.detectSentiment()
-    .then((results) => {
-      const sentiment = results[0];
-      console.log(`Score: ${sentiment.score}`);
-      console.log(`Magnitude: ${sentiment.magnitude}`);
+  let response = {
+    entities: [],
+    sentiment: null
+  }
+  
+  Promise.all([
+    document.detectSentiment(),
+    document.detectEntities(),
+    //document.detectSyntax()
+  ])
+    .spread((sentimentResult, entitiesResult) => {
+      let score = sentimentResult[0].score
+      entitiesResult[0].forEach(entity => response.entities.push(entity.name))
+      response.sentiment = score
+      //add logic to put verb stuff on the response object
+      return response
     })
-    .catch((err) => {
-      console.error('ERROR:', err);
-    });
+    .catch(console.error)
 
-  document.detectEntities()
-    .then((results) => {
-      const entities = results[0];
+  // document.detectSyntax()
+  //   .then((results) => {
+  //     console.log(results)
+  //     const syntax = results[0];
 
-      console.log('Entities:');
-      entities.forEach((entity) => {
-        console.log(entity.name);
-        console.log(` - Type: ${entity.type}, Salience: ${entity.salience}`);
-      });
-    })
-    .catch((err) => {
-      console.error('ERROR:', err);
-    });
-
-  document.detectSyntax()
-    .then((results) => {
-      console.log(results)
-      const syntax = results[0];
-
-      console.log('Parts of speech:');
-      syntax.forEach((part) => {
-        console.log(`${part.partOfSpeech.tag}:\t ${part.text.content}`);
-      });
-    })
-    .catch((err) => {
-      console.error('ERROR:', err);
-    });
+  //     console.log('Parts of speech:');
+  //     syntax.forEach((part) => {
+  //       console.log(`${part.partOfSpeech.tag}:\t ${part.text.content}`);
+  //     });
+  //   })
+  //   .catch((err) => {
+  //     console.error('ERROR:', err);
+  //   });
 }
 
 module.exports = analyzeSpeech
