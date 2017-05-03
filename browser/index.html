@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width">
 
-    <title>Web Speech API</title>
+    <title>Phrase matcher</title>
 
     <link rel="stylesheet" href="style.css">
     <!--[if lt IE 9]>
@@ -14,12 +14,18 @@
   </head>
 
   <body>
-    <h1>Pick your test</h1>
-    <ul>
-      <li><a href="phrase-matcher/index.html">Phrase matcher</a></li>
-      <li><a href="speak-easy-synthesis/index.html">Speak easy synthesis</a></li>
-      <li><a href="speech-color-changer/index.html">Speech color changer</a></li>
-    </ul>
+    <h1>Phrase matcher</h1>
+    <p>Press the button then say the phrase to test the recognition.</p>
 
+    <button>Start new test</button>
+
+    <div id='main'></div>
+
+    <div>
+        <p class="phrase">Phrase...</p>
+        <p class="output">...diagnostic messages</p>
+    </div>
+
+    <script src="bundle.js"></script>
   </body>
 </html>
