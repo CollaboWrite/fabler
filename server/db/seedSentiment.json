@@ -1,11 +1,17 @@
 {
- "positive": {
-  "color": "#FE0101"
- },
- "negative": {
-  "color": "#01EDFE"
- },
- "neutral": {
-  "color": "#FEFE01"
- }
+  "negative" : {
+    "color" : "#fe1201",
+    "id" : 1,
+    "name" : "negative"
+  },
+  "neutral" : {
+    "color" : "#01edfe",
+    "id" : 2,
+    "name" : "neutral"
+  },
+  "positive" : {
+    "color" : "#FE0101",
+    "id" : 3,
+    "name" : "positive"
+  }
 }
