@@ -1,0 +1,11 @@
+{
+ "positive": {
+  "color": "#FE0101"
+ },
+ "negative": {
+  "color": "#01EDFE"
+ },
+ "neutral": {
+  "color": "#FEFE01"
+ }
+}
