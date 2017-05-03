@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const analyzeSpeech = require('../sentiment.js')
+const analyzeSpeech = require('../analyze.js')
 
 module.exports = router
 
