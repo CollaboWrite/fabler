@@ -22,6 +22,8 @@
   "scripts": {
     "build": "webpack",
     "build-watch": "npm run build -- -w",
+    "seed": "node server/db/seed.js",
+    "start": "nodemon app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
