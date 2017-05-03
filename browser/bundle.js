@@ -10484,7 +10484,7 @@ var Root = function (_React$Component) {
 
       recognition.start();
 
-      var sentence = "";
+      // let sentence = '';
       recognition.onresult = function (event) {
         // The SpeechRecognitionEvent results property returns a SpeechRecognitionResultList object
         // The SpeechRecognitionResultList object contains SpeechRecognitionResult objects.
@@ -10494,55 +10494,49 @@ var Root = function (_React$Component) {
         // These also have getters so they can be accessed like arrays.
         // The second [0] returns the SpeechRecognitionAlternative at position 0.
         // We then return the transcript property of the SpeechRecognitionAlternative object
-        var speechCompiler = event.results[0][0].transcript;
+        var sentence = event.results[0][0].transcript;
         // diagnosticPara.textContent = 'Speech received: ' + speechCompiler + '.';
 
-        sentence = speechCompiler;
+        // sentence = speechCompiler
 
-        console.log(speechCompiler);
+        console.log(sentence);
 
-        console.log('Confidence: ' + event.results[0][0].confidence);
-      };
+        // console.log('Confidence: ' + event.results[0][0].confidence);
 
-      recognition.onspeechend = function () {
-        recognition.stop();
-        this.testBtn = '';
-        // testBtn.textContent = 'Start new test';
         _axios2.default.post('/input', { sentence: sentence }).then(function (nlpObj) {
-          // let sentiment = nlpObj.sentiment
-          // if (sentiment < -0.75) {
-          //   sentiment = 'negative'
-          // } else if (sentiment > 0.75) {
-          //   sentiment = 'positive'
-          // } else {
-          //   sentiment = 'neutral'
-          // }
-          var sentiment = 'negative';
+          var sentiment = nlpObj.data.sentiment;
+          if (sentiment < 0) {
+            sentiment = 'negative';
+          } else if (sentiment > 0.25) {
+            sentiment = 'positive';
+          } else {
+            sentiment = 'neutral';
+          }
           var bgColor = void 0;
           sentimentDb.orderByChild('name').equalTo(sentiment).once('value').then(function (snapshot) {
             bgColor = snapshot.val();
-            console.log('what is snapshot', snapshot.val());
             nlpObj.bgColor = bgColor[sentiment].color;
             return nlpObj;
           }).then(function (nlpObj) {
             self.setState({ backgroundColor: nlpObj.bgColor });
           });
-          // return nlpObj
+          // return nlpObj.data    if we need to do further Firebase queries!!!
         }).catch(function (err) {
           return console.error(err);
         });
       };
 
+      recognition.onspeechend = function () {
+        recognition.stop();
+      };
+
       recognition.onerror = function (event) {
-        this.testBtn = '';
-        // testBtn.textContent = 'Start new test';
-        // diagnosticPara.textContent = 'Error occurred in recognition: ' + event.error;
+        console.log('there was a speech recognition error', event.error);
       };
     }
   }, {
     key: 'render',
     value: function render() {
-      console.log('state in root', this.state);
       return _react2.default.createElement(
         'div',
         { style: { backgroundColor: this.state.backgroundColor } },

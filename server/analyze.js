@@ -18,14 +18,15 @@ const analyzeSpeech = function (speechResult) {
   return Promise.all([
     document.detectSentiment(),
     document.detectEntities(),
-    //document.detectSyntax()
+    document.detectSyntax()
   ])
-    .spread((sentimentResult, entitiesResult) => {
+    .spread((sentimentResult, entitiesResult, syntaxResult) => {
       let score = sentimentResult[0].score
       entitiesResult[0].forEach(entity => response.entities.push(entity.name))
       response.sentiment = score
       //add logic to put verb stuff on the response object
       return response
+
     })
     .catch(console.error)
 

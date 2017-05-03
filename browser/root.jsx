@@ -50,7 +50,7 @@ export default class Root extends React.Component{
 
     recognition.start();
 
-    let sentence = "";
+    // let sentence = '';
     recognition.onresult = function(event) {
       // The SpeechRecognitionEvent results property returns a SpeechRecognitionResultList object
       // The SpeechRecognitionResultList object contains SpeechRecognitionResult objects.
@@ -60,26 +60,21 @@ export default class Root extends React.Component{
       // These also have getters so they can be accessed like arrays.
       // The second [0] returns the SpeechRecognitionAlternative at position 0.
       // We then return the transcript property of the SpeechRecognitionAlternative object
-      const speechCompiler = event.results[0][0].transcript;
+      const sentence = event.results[0][0].transcript;
       // diagnosticPara.textContent = 'Speech received: ' + speechCompiler + '.';
 
-      sentence = speechCompiler
+      // sentence = speechCompiler
 
-      // console.log(speechCompiler)
+      console.log(sentence)
 
       // console.log('Confidence: ' + event.results[0][0].confidence);
-    }
 
-    recognition.onspeechend = function() {
-      recognition.stop();
-      this.testBtn = ''
-      // testBtn.textContent = 'Start new test';
       axios.post('/input', {sentence})
       .then((nlpObj) => {
-        let sentiment = nlpObj.sentiment
-        if (sentiment < -0.75) {
+        let sentiment = nlpObj.data.sentiment
+        if (sentiment < 0) {
           sentiment = 'negative'
-        } else if (sentiment > 0.75) {
+        } else if (sentiment > 0.25) {
           sentiment = 'positive'
         } else {
           sentiment = 'neutral'
@@ -94,15 +89,17 @@ export default class Root extends React.Component{
         .then(function(nlpObj){
           self.setState({backgroundColor: nlpObj.bgColor})
         })
-        // return nlpObj    if we need to do further Firebase queries!!!
+        // return nlpObj.data    if we need to do further Firebase queries!!!
       })
       .catch(err => console.error(err))
     }
 
+    recognition.onspeechend = function() {
+      recognition.stop();
+    }
+
     recognition.onerror = function(event) {
-      this.testBtn = ''
-      // testBtn.textContent = 'Start new test';
-      // diagnosticPara.textContent = 'Error occurred in recognition: ' + event.error;
+      console.log('there was a speech recognition error', event.error)
     }
 
   }

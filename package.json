@@ -26,8 +26,7 @@
     "supertest-as-promised": "^4.0.2"
   },
   "scripts": {
-    "build": "webpack",
-    "build-watch": "npm run build -- -w",
+    "build": "webpack -w",
     "seed": "node server/db/seed.js",
     "start": "nodemon app.js",
     "test": "mocha --watch server/app/routes.test.js",
