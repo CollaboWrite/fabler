@@ -15,4 +15,6 @@ app.use(express.static(resolve(__dirname, 'browser')))
 
 app.use('/input', router)
 
-app.listen(3000, console.log('Listening at port 3000'))
+if(!module.parent) app.listen(3000, console.log('Listening at port 3000'))
+
+module.exports = app

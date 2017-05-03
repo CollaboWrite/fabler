@@ -10,14 +10,12 @@ const language = Language({
 });
 
 const analyzeSpeech = function (speechResult) {
-  // console.log('speechResult', speechResult)
   const document = language.document({ content: speechResult });
   let response = {
     entities: [],
     sentiment: null
   }
-  
-  Promise.all([
+  return Promise.all([
     document.detectSentiment(),
     document.detectEntities(),
     //document.detectSyntax()
