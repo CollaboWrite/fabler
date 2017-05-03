@@ -13,10 +13,10 @@ const LiveReloadPlugin = require('webpack-livereload-plugin')
     , USE_FAST_SOURCE_MAPS = false
 
 module.exports = {
-  entry: './phrase-matcher/script.js',
+  entry: './browser/script.js',
   output: {
     path: __dirname,
-    filename: './phrase-matcher/bundle.js'
+    filename: './browser/bundle.js'
   },
   context: __dirname,
   devtool: devMode && USE_FAST_SOURCE_MAPS
