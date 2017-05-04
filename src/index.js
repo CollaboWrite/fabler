@@ -26,6 +26,7 @@ export default class Root extends React.Component{
     super(props)
     this.state = {
       color: 'white',
+      entities: []
     }
     this.testSpeech = this.testSpeech.bind(this)
     this.changeColor = this.changeColor.bind(this)
@@ -75,6 +76,7 @@ export default class Root extends React.Component{
       axios.post('/input', {sentence})
       .then((nlpObj) => {
         let sentiment = nlpObj.data.sentiment
+        console.log("What are the entities?", nlpObj.data)
         if (sentiment < 0) {
           sentiment = 'negative'
         } else if (sentiment > 0.25) {
@@ -92,7 +94,10 @@ export default class Root extends React.Component{
         .then((nlpObj) => {
           this.setState({color: nlpObj.bgColor})
         })
-        // return nlpObj.data    if we need to do further Firebase queries!!!
+        return nlpObj.data    //if we need to do further Firebase queries!!!
+      })
+      .then(nlpObj => {
+        return this.setState({entities: nlpObj.entities})
       })
       .catch(err => console.error(err))
     }
@@ -108,6 +113,8 @@ export default class Root extends React.Component{
   }
 
   render() {
+    const entities = this.state.entities
+    let counter = 0
     return (
       <Scene>
         <a-assets>
@@ -120,7 +127,10 @@ export default class Root extends React.Component{
         <Entity primitive="a-light" type="point" intensity="2" position="2 4 4"/>
         <Entity primitive="a-sky" height="2048" radius="30" src="#skyTexture" theta-length="90" width="2048"/>
         <Entity text={{value: 'Texty text', align: 'center'}} position={{x: 0, y: 2, z: -1}}/>
-
+        {entities.map((word, idx) => {
+          counter++
+          return (<Entity key={counter} text={{value: word, align: 'center'}} position={{x: 0, y: (Math.random() * 2), z: -1}}/>)
+        })}
         <Entity id="box"
           geometry={{primitive: 'box'}}
           material={{color: this.state.color, opacity: 0.6}}
