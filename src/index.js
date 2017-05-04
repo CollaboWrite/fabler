@@ -49,7 +49,7 @@ export default class Root extends React.Component{
     // speechRecognitionList.addFromString(grammar, 1);
     recognition.grammars = speechRecognitionList;
     recognition.lang = 'en-US';
-    recognition.interimResults = false;
+    recognition.interimResults = true;
     recognition.maxAlternatives = 1;
 
     recognition.start();
@@ -115,6 +115,7 @@ export default class Root extends React.Component{
   render() {
     const entities = this.state.entities
     let counter = 0
+    let height = 1.5
     return (
       <Scene>
         <a-assets>
@@ -126,11 +127,31 @@ export default class Root extends React.Component{
         <Entity primitive="a-light" type="ambient" color="#445451"/>
         <Entity primitive="a-light" type="point" intensity="2" position="2 4 4"/>
         <Entity primitive="a-sky" height="2048" radius="30" src="#skyTexture" theta-length="90" width="2048"/>
-        <Entity text={{value: 'Texty text', align: 'center'}} position={{x: 0, y: 2, z: -1}}/>
-        {entities.map((word, idx) => {
-          counter++
-          return (<Entity key={counter} text={{value: word, align: 'center'}} position={{x: 0, y: (Math.random() * 2), z: -1}}/>)
-        })}
+        {this.state.color !== 'white' ? 
+          entities.map((word, idx) => {
+            counter++
+            height += 0.2
+            if (idx%2) {
+              return (<Entity 
+                key={counter} 
+                text={{value: word, align: 'center'}} 
+                position={{x: 0, y: height, z: -1}} 
+                scale={{x: (entities.length - idx), y: (entities.length - idx), z: 2}}
+                animation__rotate={{property: 'rotation', dur: 2000, loop: true, to: '360 360 360'}}
+              />)
+            } else {
+              return (<Entity 
+                key={counter} 
+                text={{value: word, align: 'center'}} 
+                position={{x: 0, y: height, z: -1}} 
+                scale={{x: (entities.length - idx), y: (entities.length - idx), z: 2}}
+                animation__scale={{property: 'scale', dir: 'alternate', dur: 100, loop: true, to: '4 2 2'}}
+              />)
+            }
+          })
+          :
+          (<Entity text={{value: 'Click the cube and begin to speak', align: 'center'}} position={{x: 0, y: 2, z: -1}}/>)
+        }
         <Entity id="box"
           geometry={{primitive: 'box'}}
           material={{color: this.state.color, opacity: 0.6}}

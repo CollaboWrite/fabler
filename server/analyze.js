@@ -22,6 +22,7 @@ const analyzeSpeech = function (speechResult) {
   ])
     .spread((sentimentResult, entitiesResult, syntaxResult) => {
       let score = sentimentResult[0].score
+      console.log('Lets look deeper at the entities result', entitiesResult)
       entitiesResult[0].forEach(entity => response.entities.push(entity.name))
       response.sentiment = score
       //add logic to put verb stuff on the response object
