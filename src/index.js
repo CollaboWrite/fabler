@@ -25,7 +25,7 @@ export default class Root extends React.Component{
   constructor(props) {
     super(props)
     this.state = {
-      color: 'white'
+      color: 'white',
     }
     this.testSpeech = this.testSpeech.bind(this)
     this.changeColor = this.changeColor.bind(this)
@@ -97,7 +97,7 @@ export default class Root extends React.Component{
       .catch(err => console.error(err))
     }
 
-    recognition.onspeechend = function() {
+    recognition.onspeechend = () => {
       recognition.stop();
     }
 
@@ -124,11 +124,9 @@ export default class Root extends React.Component{
         <Entity id="box"
           geometry={{primitive: 'box'}}
           material={{color: this.state.color, opacity: 0.6}}
-          animation__rotate={{property: 'rotation', dur: 2000, loop: true, to: '360 360 360'}}
-          animation__scale={{property: 'scale', dir: 'alternate', dur: 100, loop: true, to: '1.1 1.1 1.1'}}
           position={{x: 0, y: 1, z: -3}}
           events={{click: this.changeColor.bind(this)}}>
-          <Entity animation__scale={{property: 'scale', dir: 'alternate', dur: 100, loop: true, to: '2 2 2'}}
+          <Entity 
                   geometry={{primitive: 'box', depth: 0.2, height: 0.2, width: 0.2}}
                   material={{color: '#24CAFF'}}/>
         </Entity>
@@ -145,3 +143,9 @@ export default class Root extends React.Component{
 render(<Root />,
   document.querySelector('#sceneContainer'))
 
+// Animation in box entity on line 124
+// animation__rotate={{property: 'rotation', dur: 2000, loop: true, to: '360 360 360'}}
+// animation__scale={{property: 'scale', dir: 'alternate', dur: 100, loop: true, to: '1.1 1.1 1.1'}}
+
+// Animation in box entity on line 129
+// animation__scale={{property: 'scale', dir: 'alternate', dur: 100, loop: true, to: '2 2 2'}}
