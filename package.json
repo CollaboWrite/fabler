@@ -5,9 +5,14 @@
   "main": "app.js",
   "dependencies": {
     "@google-cloud/language": "^0.10.3",
+    "aframe": "^0.5.0",
+    "aframe-animation-component": "^3.2.5",
+    "aframe-particle-system-component": "^1.0.9",
+    "aframe-react": "^4.2.3",
     "axios": "^0.16.1",
     "babel-core": "^6.24.1",
     "babel-loader": "^7.0.0",
+    "babel-polyfill": "^6.23.0",
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-2": "^6.24.1",
@@ -16,6 +21,7 @@
     "firebase": "^3.9.0",
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
+    "react-scripts": "^0.9.5",
     "volleyball": "^1.4.1",
     "webpack-livereload-plugin": "^0.11.0"
   },
@@ -26,11 +32,13 @@
     "supertest-as-promised": "^4.0.2"
   },
   "scripts": {
-    "build": "webpack -w",
+    "build": "webpack --display-error-details",
     "seed": "node server/db/seed.js",
     "start": "nodemon app.js",
     "test": "mocha --watch server/app/routes.test.js",
-    "grade": "mocha --reporter spec --timeout 300 server/app/routes.test.js"
+    "grade": "mocha --reporter spec --timeout 300 server/app/routes.test.js",
+    "start-vr": "react-scripts start",
+    "build-vr": "react-scripts build"
   },
   "repository": {
     "type": "git",
@@ -41,5 +49,6 @@
   "bugs": {
     "url": "https://github.com/fabler-GHA/fabler/issues"
   },
-  "homepage": "https://github.com/fabler-GHA/fabler#readme"
+  "homepage": "https://github.com/fabler-GHA/fabler#readme",
+  "proxy": "http://localhost:4000"
 }
